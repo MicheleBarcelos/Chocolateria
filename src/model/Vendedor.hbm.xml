@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 05/12/2015 18:26:38 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Vendedor" table="vendedor" catalog="chocolateria" optimistic-lock="version">
+        <id name="codVen" type="java.lang.Integer">
+            <column name="CodVen" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="usuario" class="model.Usuario" fetch="select">
+            <column name="Usuario_idUsuario" />
+        </many-to-one>
+        <property name="nome" type="string">
+            <column name="Nome" length="45" not-null="true" />
+        </property>
+        <property name="endereco" type="string">
+            <column name="Endereco" length="100" />
+        </property>
+        <property name="telefone" type="string">
+            <column name="Telefone" length="12" not-null="true" />
+        </property>
+        <set name="vendas" table="venda" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="Vendedor_CodVen" not-null="true" />
+            </key>
+            <one-to-many class="model.Venda" />
+        </set>
+    </class>
+</hibernate-mapping>

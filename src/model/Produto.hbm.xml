@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 05/12/2015 18:26:38 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Produto" table="produto" catalog="chocolateria" optimistic-lock="version">
+        <id name="codProd" type="java.lang.Integer">
+            <column name="CodProd" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="recheio" class="model.Recheio" fetch="select">
+            <column name="Recheio" not-null="true" />
+        </many-to-one>
+        <property name="descricao" type="string">
+            <column name="Descricao" length="60" not-null="true" />
+        </property>
+        <property name="preco" type="big_decimal">
+            <column name="Preco" precision="3" not-null="true" />
+        </property>
+        <property name="peso" type="string">
+            <column name="Peso" length="10" />
+        </property>
+        <set name="items" table="item" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="Produto" not-null="true" />
+            </key>
+            <one-to-many class="model.Item" />
+        </set>
+    </class>
+</hibernate-mapping>

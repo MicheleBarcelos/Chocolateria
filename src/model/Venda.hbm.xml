@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 05/12/2015 18:26:38 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Venda" table="venda" catalog="chocolateria" optimistic-lock="version">
+        <id name="codVenda" type="java.lang.Integer">
+            <column name="CodVenda" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="cliente" class="model.Cliente" fetch="select">
+            <column name="Cliente_CodCli" not-null="true" />
+        </many-to-one>
+        <many-to-one name="formapagto" class="model.Formapagto" fetch="select">
+            <column name="FormaPagto_CodPagto" not-null="true" />
+        </many-to-one>
+        <many-to-one name="vendedor" class="model.Vendedor" fetch="select">
+            <column name="Vendedor_CodVen" not-null="true" />
+        </many-to-one>
+        <property name="dataVenda" type="timestamp">
+            <column name="DataVenda" length="19" not-null="true" />
+        </property>
+        <property name="valorVenda" type="big_decimal">
+            <column name="ValorVenda" precision="5" />
+        </property>
+        <property name="desconto" type="java.lang.Integer">
+            <column name="Desconto" />
+        </property>
+        <property name="comissao" type="big_decimal">
+            <column name="Comissao" precision="5" />
+        </property>
+        <set name="items" table="itemvenda" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="Venda_CodVenda" not-null="true" />
+            </key>
+            <many-to-many entity-name="model.Item">
+                <column name="Item_CodItem" not-null="true" />
+            </many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>
